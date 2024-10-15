@@ -1,9 +1,17 @@
 const fs = require("fs");
 const sllUrls = require("../public/allUrls");
 
-function convertToJson(inputPath) {
+function convertToJson() {
+  const mainJsonPath = "public/main.json";
+
+  if (fs.existsSync(mainJsonPath)) {
+    console.log("\x1b[41m", "main Json is already exists !!");
+
+    return 0;
+  }
+
   if (!Array.isArray(sllUrls.urls)) {
-    console.log("data most be an array");
+    console.log("\x1b[41m", "data most be an array");
     return 0;
   }
 
@@ -19,10 +27,10 @@ function convertToJson(inputPath) {
   });
 
   try {
-    var writeStream = fs.createWriteStream("public/main.json");
+    var writeStream = fs.createWriteStream(mainJsonPath);
     writeStream.write(JSON.stringify({ data: mainJson }));
     writeStream.end();
-    console.log("file creation task Done!");
+    console.log("\x1b[42m", "file creation task Done!");
   } catch (err) {
     console.error(err);
   }
